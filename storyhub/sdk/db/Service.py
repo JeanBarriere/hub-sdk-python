@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from peewee import BooleanField, TextField, UUIDField
+from peewee import TextField, UUIDField
 
 from storyhub.sdk.db.BaseModel import BaseModel
 
