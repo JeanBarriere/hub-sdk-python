@@ -7,9 +7,7 @@ class ServiceData(ServiceObject):
     This represents an entire service stored within the Storyscript Hub.
     """
 
-    def __init__(
-        self, name, uuid, description, configuration
-    ):
+    def __init__(self, name, uuid, description, configuration):
         super().__init__(data)
 
         self._name = name
@@ -27,7 +25,7 @@ class ServiceData(ServiceObject):
             description=service_data["description"],
             configuration=Configuration.from_dict(
                 data={"configuration": service_data["configuration"]}
-            )
+            ),
         )
 
     def name(self):

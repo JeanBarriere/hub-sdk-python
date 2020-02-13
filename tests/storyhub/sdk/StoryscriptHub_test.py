@@ -11,11 +11,7 @@ from tests.storyhub.sdk.JsonFixtureHelper import JsonFixtureHelper
 
 class VerifiableService:
     def __init__(
-        self,
-        name: str,
-        description: str,
-        uuid: str,
-        configuration: dict,
+        self, name: str, description: str, uuid: str, configuration: dict,
     ):
         self.name = name
         self.description = description
@@ -77,9 +73,8 @@ def test_get_with_name(mocker):
 
     assert hub.get("redis") is not None
 
-    Service.select().where.assert_called_with(
-        (Service.name == "redis")
-    )
+    Service.select().where.assert_called_with((Service.name == "redis"))
+
 
 not_python_fixture = JsonFixtureHelper.load_fixture("not_python_fixture")
 

@@ -70,17 +70,13 @@ class StoryscriptHub:
         """
         services = []
         with Database(self.db_path):
-            for s in Service.select(
-                Service.name
-            ):
+            for s in Service.select(Service.name):
                 services.append(s.name)
 
         return services
 
     @cached(cache=ttl_cache_for_services)
-    def get(
-        self, name=None
-    ) -> Union[Service, ServiceData]:
+    def get(self, name=None) -> Union[Service, ServiceData]:
         """
         Get a service from the database.
 
@@ -91,9 +87,7 @@ class StoryscriptHub:
 
         service = None
 
-        service = self._service_wrapper.get(
-            name=name
-        )
+        service = self._service_wrapper.get(name=name)
         if service is not None:
             return service
 
