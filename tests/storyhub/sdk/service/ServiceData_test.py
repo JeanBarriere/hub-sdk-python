@@ -28,6 +28,7 @@ def test_deserialization(mocker):
         }
     )
 
+
 def test_serialization(mocker):
     mocker.patch.object(json, "dumps", return_value=service_data_fixture_json)
 
