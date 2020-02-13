@@ -34,9 +34,8 @@ def test_caching(mocker):
     actual_service = VerifiableService(
         name="sample_name",
         description="service_description",
-        certified=False,
         uuid="A86742FD-55B4-4AEC-92B9-9989B3AF2F7E",
-        config=config,
+        configuration=config,
     )
 
     registered_services = [actual_service.service]
@@ -58,7 +57,7 @@ def test_caching(mocker):
         name="second_service",
         description="second_service_description",
         uuid="7D5D5A94-F45D-4F44-9B65-BAE13C49AAF4",
-        config=config,
+        configuration=config,
     )
     registered_services.append(second_service)
 
