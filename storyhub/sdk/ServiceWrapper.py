@@ -59,7 +59,7 @@ class ServiceWrapper:
         raw_services = GraphQL.get_all()
         services = {}
         for service in raw_services:
-            services[service["service"]["name"]] = service
+            services[service["name"]] = service
         return services
 
     def get_services(self, services):
@@ -90,7 +90,7 @@ class ServiceWrapper:
             services_dict (Dict[str, Dict[str, Any]]): map of service names
                 to service data.
         """
-        services_dict[service["service"]["name"]] = service
+        services_dict[service["name"]] = service
 
     def reload_services(self, services):
         if services is None:

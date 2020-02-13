@@ -135,13 +135,14 @@ class StoryscriptHub:
         with Database(self.db_path) as db:
             with db.atomic(lock_type="IMMEDIATE"):
                 Service.delete().execute()
-                for service in services:
-                    Service.create(
-                        uuid=service["uuid"],
-                        name=service["name"],
-                        description=service["description"],
-                        configuration=json.dumps(service["configuration"]),
-                    )
+                if len(services) > 0:
+                    for service in services:
+                        Service.create(
+                            uuid=service["uuid"],
+                            name=service["name"],
+                            description=service["description"],
+                            configuration=json.dumps(service["configuration"]),
+                        )
 
         with self.update_lock:
             self.ttl_cache_for_service_names.clear()

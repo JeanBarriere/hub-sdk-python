@@ -38,7 +38,7 @@ def test_caching(mocker):
         configuration=config,
     )
 
-    registered_services = [actual_service.service]
+    registered_services = [actual_service]
 
     mocker.patch.object(GraphQL, "get_all", return_value=registered_services)
     hub = StoryscriptHub(db_path=tempfile.mkdtemp())
@@ -85,7 +85,7 @@ def test_service_wrapper(mocker):
 
     mocker.patch.object(ServiceData, "from_dict")
 
-    assert hub.get("microservice/not_python") is not None
+    assert hub.get("not_python") is not None
 
     ServiceData.from_dict.assert_called_with(
         data={"service_data": not_python_fixture}
@@ -99,7 +99,7 @@ def test_get_with_wrap_service(mocker):
 
     mocker.patch.object(ServiceData, "from_dict")
 
-    assert hub.get("microservice/not_python") is not None
+    assert hub.get("not_python") is not None
 
     ServiceData.from_dict.assert_called_with(
         data={"service_data": not_python_fixture}

@@ -1,20 +1,18 @@
 {
   "wrapper_service_data_fixture": [{
-    "service": {
-      "name": "python",
-      "alias": "python",
-      "owner": {
-        "username": "microservice"
-      },
-      "topics": [
-        "python",
-        "microservice"
-      ],
-      "description": "Execute a Python file with arguments.",
-      "isCertified": "false",
-      "public": "true"
+    "name": "python",
+    "alias": "python",
+    "owner": {
+      "username": "microservice"
     },
-    "serviceUuid": "0453f136-fe37-4c03-98a9-6ee38165c19e",
+    "topics": [
+      "python",
+      "microservice"
+    ],
+    "description": "Execute a Python file with arguments.",
+    "isCertified": "false",
+    "public": "true",
+    "uuid": "0453f136-fe37-4c03-98a9-6ee38165c19e",
     "state": "BETA",
     "configuration": {
       "volumes": {
@@ -32,26 +30,23 @@
           }
         }
       }
-    },
-    "readme": "nothing to see here."
+    }
   },
     {
-      "service": {
-        "name": "hashes",
-        "alias": null,
-        "owner": {
-          "username": "microservice"
-        },
-        "topics": [
-          "hashing",
-          "omg",
-          "microservice"
-        ],
-        "description": "An OMG service which provides various hashing capabilities",
-        "isCertified": "false",
-        "public": "true"
+      "name": "hashes",
+      "alias": null,
+      "owner": {
+        "username": "microservice"
       },
-      "serviceUuid": "0ceab9e4-b353-467d-8c77-e1538ab80ec1",
+      "topics": [
+        "hashing",
+        "omg",
+        "microservice"
+      ],
+      "description": "An OMG service which provides various hashing capabilities",
+      "isCertified": "false",
+      "public": "true",
+      "uuid": "0ceab9e4-b353-467d-8c77-e1538ab80ec1",
       "state": "BETA",
       "configuration": {
         "omg": 1,
@@ -121,7 +116,6 @@
       "readme": "Hashes\n=======\n\n[![Build status](https://img.shields.io/travis/microservice/hashes/master.svg?style=for-the-badge)](https://travis-ci.org/microservice/hashes)\n\nThis OMG service provides various digest and hashing capabilities.\n\nUsage\n-----\n\n```coffee\n# Storyscript\ndigest = hashes digest method: \"sha1\" data: \"hello world\"\n# {\"method\":\"sha1\",\"digest\":\"2AAE6C35C94FCFB415DBE95F408B9CE91EE846ED\"}\n```\n\n```coffee\n# Storyscript\ndigest = hashes hmac method: \"sha1\" data: \"hello world\" secret: \"my secret\"\n# {\"method\":\"sha1\",\"digest\":\"9F60EE4B05E590A7F3FAC552BFB9D98FA46F78D9\"}\n```\n"
     },
     {
-      "service": {
         "name": "http",
         "alias": "http",
         "owner": {
@@ -134,9 +128,8 @@
         ],
         "description": "The Asyncy API gateway server for executing Stories via HTTP.",
         "isCertified": "true",
-        "public": "true"
-      },
-      "serviceUuid": "18564840-7551-4bb7-9ba7-bb9c9e2d92b4",
+        "public": "true",
+      "uuid": "18564840-7551-4bb7-9ba7-bb9c9e2d92b4",
       "state": "BETA",
       "configuration": {
         "omg": 1,
@@ -205,7 +198,6 @@
       "readme": "# Asyncy HTTP Gateway\n\nAPI gateway server for executing Stories via HTTP.\n\n```coffee\nhttp server as server\n  when server listen method:'get' path:'/' as r\n    log info msg:r.body\n    log info msg:r.headers\n    log info msg:r.headers['Host']\n    r write data:'Hello World'\n    r status code:200\n    r finish\n```\n\n```sh\n$ curl https://foobar.storyscriptapp.com/\nHello World\n```\n\n\n## Development\n\nSetup virtual environment and install dependencies\n```\nvirtualenv -p python3.6 venv\nsource venv/bin/activate\npip install -r requirements.txt\n```\n\nRun locally by calling\n\n```\npython -m app.main --logging=debug --debug\n```\n\n### Register an endpoint\n\n```shell\ncurl --data '{\"endpoint\": \"http://localhost:9000/story/foo\", \"data\":{\"path\":\"/ping\", \"method\": \"post\", \"host\": \"a\"}}' \\\n     -H \"Content-Type: application/json\" \\\n     localhost:8889/register\n```\n\nNow access that endpoint\n\n```shell\ncurl -X POST -d 'foobar' -H \"Host: a.storyscriptapp.com\" http://localhost:8888/ping\n```\n\n\n### Unregister an endpoint\n\n```shell\ncurl --data '{\"endpoint\": \"http://localhost:9000/story/foo\", \"data\":{\"path\":\"/ping\", \"method\": \"post\", \"host\": \"a\"}}' \\\n     -H \"Content-Type: application/json\" \\\n     localhost:8889/unregister\n```\n"
     },
     {
-      "service": {
         "name": "helloworld",
         "alias": "hello",
         "owner": {
@@ -216,9 +208,8 @@
         ],
         "description": "Does something completely pointless",
         "isCertified": "false",
-        "public": "true"
-      },
-      "serviceUuid": "0453f136-fe37-4c03-98a9-6ee38165c19e",
+        "public": "true",
+      "uuid": "0453f136-fe37-4c03-98a9-6ee38165c19e",
       "state": "BETA",
       "configuration": {
         "entrypoint": {
@@ -234,7 +225,6 @@
       },
       "readme": "Hello World"
     }, {
-      "service": {
         "name": "hashes",
         "alias": null,
         "owner": {
@@ -247,9 +237,8 @@
         ],
         "description": "An OMG service which provides various hashing capabilities",
         "isCertified": "false",
-        "public": "true"
-      },
-      "serviceUuid": "0ceab9e4-b353-467d-8c77-e1538ab80ec1",
+        "public": "true",
+      "uuid": "0ceab9e4-b353-467d-8c77-e1538ab80ec1",
       "state": "BETA",
       "configuration": {
         "omg": 1,
@@ -296,7 +285,6 @@
       "readme": "Hashes\n=======\n\n[![Build status](https://img.shields.io/travis/microservice/hashes/master.svg?style=for-the-badge)](https://travis-ci.org/microservice/hashes)\n\nThis OMG service provides various digest and hashing capabilities.\n\nUsage\n-----\n\n```coffee\n# Storyscript\ndigest = hashes digest method: \"sha1\" data: \"hello world\"\n# {\"method\":\"sha1\",\"digest\":\"2AAE6C35C94FCFB415DBE95F408B9CE91EE846ED\"}\n```\n\n```coffee\n# Storyscript\ndigest = hashes hmac method: \"sha1\" data: \"hello world\" secret: \"my secret\"\n# {\"method\":\"sha1\",\"digest\":\"9F60EE4B05E590A7F3FAC552BFB9D98FA46F78D9\"}\n```\n"
     }],
   "not_python_fixture" : {
-    "service": {
       "name": "not_python",
       "alias": "npython",
       "owner": {
@@ -308,9 +296,8 @@
       ],
       "description": "Don't execute a Python file with arguments.",
       "isCertified": "false",
-      "public": "true"
-    },
-    "serviceUuid": "0453f136-fe67-4c03-98a9-6ee38165c19e",
+      "public": "true",
+    "uuid": "0453f136-fe67-4c03-98a9-6ee38165c19e",
     "state": "BETA",
     "configuration": {
       "volumes": {
@@ -332,7 +319,6 @@
     "readme": "nothing to see here."
   },
   "hello_services": [{
-    "service": {
       "name": "helloworld",
       "alias": "hello",
       "owner": {
@@ -343,9 +329,8 @@
       ],
       "description": "Does something completely pointless",
       "isCertified": "false",
-      "public": "true"
-    },
-    "serviceUuid": "0453f136-fe37-4c03-98a9-6ee38165c19e",
+      "public": "true",
+    "uuid": "0453f136-fe37-4c03-98a9-6ee38165c19e",
     "state": "BETA",
     "configuration": {
       "entrypoint": {
@@ -363,7 +348,6 @@
   }],
   "service_data_fixture": {
     "service_data": {
-      "service": {
         "name": "http",
         "alias": "http",
         "owner": {
@@ -376,9 +360,8 @@
         ],
         "description": "The Storyscript API gateway server for executing Stories via HTTP.",
         "isCertified": "true",
-        "public": "true"
-      },
-      "serviceUuid": "18564840-7551-4bb7-9ba7-bb9c9e2d92b4",
+        "public": "true",
+      "uuid": "18564840-7551-4bb7-9ba7-bb9c9e2d92b4",
       "state": "BETA",
       "configuration": {
         "omg": 1,
@@ -1520,18 +1503,44 @@
     }
   },
   "service_fixture": {
-    "service": {
-      "name": "foaas",
-      "alias": null,
-      "owner": {
-        "username": "Arinono"
+    "name": "foaas",
+    "uuid": "0453f136-fe37-4c03-98a9-6ee38165c19e",
+    "configuration": {
+      "omg": 1,
+      "info": {
+        "title": "Hashes",
+        "license": {
+          "url": "https://opensource.org/licenses/MIT",
+          "name": "MIT"
+        },
+        "version": "0.1.0",
+        "description": "Digest and hashing capabilities"
       },
-      "topics": [
-        "foaas"
-      ],
-      "description": null,
-      "isCertified": false,
-      "public": true
+      "actions": {
+        "hmac": {
+          "http": {
+            "path": "/hmac",
+            "port": 8080,
+            "method": "post"
+          },
+          "output": {
+            "type": "object",
+            "properties": {
+              "digest": {
+                "type": "string"
+              }
+            },
+            "contentType": "application/json"
+          },
+          "arguments": {
+            "data": {
+              "in": "requestBody",
+              "type": "string",
+              "required": "true"
+            }
+          }
+        }
+      }
     }
   }
 }
