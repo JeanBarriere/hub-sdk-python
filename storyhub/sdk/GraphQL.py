@@ -6,7 +6,7 @@ from time import sleep
 import requests
 
 api_url = environ.get(
-    "STORYSCRIPT_HUB_API", "https://api.storyscript.io/graphql"
+    "STORYSCRIPT_HUB_API", "https://api.storyscript.com/graphql"
 )
 
 
@@ -15,25 +15,14 @@ class GraphQL:
     def get_all(cls):
         query = """
         {
-          allServiceTags {
-            nodes {
-              service {
+            allServices {
+              nodes {
+                uuid
                 name
-                alias
-                owner {
-                  username
-                }
-                topics
                 description
-                isCertified
-                public
+                configuration
               }
-              serviceUuid
-              state
-              configuration
-              readme
             }
-          }
         }
         """
         max_attempts = 5
@@ -60,4 +49,4 @@ class GraphQL:
                     raise e
 
         data = res.json()
-        return data["data"]["allServiceTags"]["nodes"]
+        return data["data"]["allServices"]["nodes"]

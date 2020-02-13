@@ -59,15 +59,7 @@ class ServiceWrapper:
         raw_services = GraphQL.get_all()
         services = {}
         for service in raw_services:
-            slug = (
-                service["service"]["owner"]["username"]
-                + "/"
-                + service["service"]["name"]
-            )
-            services[slug] = service
-            if service["service"]["alias"] is not None:
-                # alias is unique is enforced in DB constraints
-                services[service["service"]["alias"]] = service
+            services[service["service"]["name"]] = service
         return services
 
     def get_services(self, services):
@@ -98,15 +90,7 @@ class ServiceWrapper:
             services_dict (Dict[str, Dict[str, Any]]): map of service names
                 to service data.
         """
-        slug = (
-            service["service"]["owner"]["username"]
-            + "/"
-            + service["service"]["name"]
-        )
-        services_dict[slug] = service
-        if service["service"]["alias"] is not None:
-            # alias is unique is enforced in DB constraints
-            services_dict[service["service"]["alias"]] = service
+        services_dict[service["service"]["name"]] = service
 
     def reload_services(self, services):
         if services is None:
@@ -136,28 +120,18 @@ class ServiceWrapper:
             with open(out_file, "w") as f:
                 f.write(self.as_json())
 
-    def get_all_service_names(self, include_aliases=True):
+    def get_all_service_names(self):
         service_names = []
 
         for service in self.services:
-            if not include_aliases and service.count("/") == 0:
-                continue
             service_names.append(service)
         return service_names
 
-    def get(self, alias=None, owner=None, name=None):
-        if alias is not None and alias.count("/") == 1:
-            owner, name = alias.split("/")
-            alias = None
-
+    def get(self, name=None):
         service = None
 
-        if alias is not None:
-            if alias in self.services:
-                service = self.services[alias]
-        elif owner is not None and name is not None:
-            if f"{owner}/{name}" in self.services:
-                service = self.services[f"{owner}/{name}"]
+        if name in self.services:
+            service = self.services[name]
 
         if service is None:
             return None

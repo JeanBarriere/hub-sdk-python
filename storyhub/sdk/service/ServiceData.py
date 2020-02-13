@@ -1,5 +1,4 @@
 from storyhub.sdk.service.Configuration import Configuration
-from storyhub.sdk.service.Service import Service
 from storyhub.sdk.service.ServiceObject import ServiceObject
 
 
@@ -9,15 +8,13 @@ class ServiceData(ServiceObject):
     """
 
     def __init__(
-        self, name, uuid, service, state, readme, configuration, data
+        self, name, uuid, description, configuration
     ):
         super().__init__(data)
 
         self._name = name
-        self._service = service
         self._uuid = uuid
-        self._state = state
-        self._readme = readme
+        self._description = description
         self._configuration = configuration
 
     @classmethod
@@ -25,17 +22,12 @@ class ServiceData(ServiceObject):
         service_data = data["service_data"]
 
         return cls(
-            name=service_data["service"]["name"],
-            service=Service.from_dict(
-                data={"service": service_data["service"]}
-            ),
-            state=service_data["state"],
-            uuid=service_data["serviceUuid"],
-            readme=service_data.get("readme", "No readme found."),
+            name=service_data["name"],
+            uuid=service_data["uuid"],
+            description=service_data["description"],
             configuration=Configuration.from_dict(
                 data={"configuration": service_data["configuration"]}
-            ),
-            data=data,
+            )
         )
 
     def name(self):
@@ -50,14 +42,8 @@ class ServiceData(ServiceObject):
     def uuid(self):
         return self._uuid
 
-    def service(self):
-        return self._service
-
-    def readme(self):
-        return self._readme
-
-    def state(self):
-        return self._state
+    def description(self):
+        return self._description
 
     def configuration(self):
         return self._configuration

@@ -63,32 +63,27 @@ class StoryscriptHub:
     @cached(cache=ttl_cache_for_service_names)
     def get_all_service_names(self) -> [str]:
         """
-        Get all service names and aliases from the database.
+        Get all service names from the database.
 
         :return: An array of strings, which might look like:
-        ["hello", "universe/hello"]
+        ["hello", "world"]
         """
         services = []
         with Database(self.db_path):
             for s in Service.select(
-                Service.name, Service.alias, Service.username
+                Service.name
             ):
-                if s.alias:
-                    services.append(s.alias)
-
-                services.append(f"{s.username}/{s.name}")
+                services.append(s.name)
 
         return services
 
     @cached(cache=ttl_cache_for_services)
     def get(
-        self, alias=None, owner=None, name=None
+        self, name=None
     ) -> Union[Service, ServiceData]:
         """
         Get a service from the database.
 
-        :param alias: Takes precedence when specified over owner/name
-        :param owner: The owner of the service
         :param name: The name of the service
         :return: Returns a :py:class:~.sdk.service.ServiceData.ServiceData
         object instance.
@@ -97,21 +92,21 @@ class StoryscriptHub:
         service = None
 
         service = self._service_wrapper.get(
-            alias=alias, owner=owner, name=name
+            name=name
         )
         if service is not None:
             return service
 
         if service is None:
-            service = self._get(alias, owner, name)
+            service = self._get(name)
 
         if service is None:
             # Maybe it's new in the Hub?
             with self.retry_lock:
-                service = self._get(alias, owner, name)
+                service = self._get(name)
                 if service is None:
                     self.update_cache()
-                    service = self._get(alias, owner, name)
+                    service = self._get(name)
 
         if service is not None:
             # ensures test don't break
@@ -127,19 +122,10 @@ class StoryscriptHub:
 
         return service
 
-    def _get(self, alias: str = None, owner: str = None, name: str = None):
+    def _get(self, name: str = None):
         try:
-            if alias is not None and alias.count("/") == 1:
-                owner, name = alias.split("/")
-                alias = None
-
             with Database(self.db_path):
-                if alias:
-                    service = Service.select().where(Service.alias == alias)
-                else:
-                    service = Service.select().where(
-                        (Service.username == owner) & (Service.name == name)
-                    )
+                service = Service.select().where(Service.name == name)
 
                 return service.get()
         except DoesNotExist:
@@ -157,18 +143,10 @@ class StoryscriptHub:
                 Service.delete().execute()
                 for service in services:
                     Service.create(
-                        service_uuid=service["serviceUuid"],
-                        name=service["service"]["name"],
-                        alias=service["service"]["alias"],
-                        username=service["service"]["owner"]["username"],
-                        description=service["service"]["description"],
-                        certified=service["service"]["isCertified"],
-                        public=service["service"]["public"],
-                        topics=json.dumps(service["service"]["topics"]),
-                        state=service["state"],
+                        uuid=service["uuid"],
+                        name=service["name"],
+                        description=service["description"],
                         configuration=json.dumps(service["configuration"]),
-                        readme=service["readme"],
-                        raw_data=json.dumps(service),
                     )
 
         with self.update_lock:
